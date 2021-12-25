@@ -1,0 +1,1 @@
+Gallery Webpack: practice lesson
