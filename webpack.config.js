@@ -1,6 +1,6 @@
 const {resolve} = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
- const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 exports.default = {
@@ -10,16 +10,45 @@ exports.default = {
         filename: "main.[contenthash].js"
     },
     devServer: {
-        watchFiles: resolve(__dirname,'./'),
+        watchFiles: resolve(__dirname, './'),
         port: 9000,
         static: './build',
-       liveReload:true,
+        liveReload: true,
         hot: true
     },
     module: {
         rules: [
             {
-                test: /\.(png|jpg|gif|mp3|mp4)$/i,
+                test: /\.(jpg|png|gif|svg)$/,
+                loader: 'image-webpack-loader',
+                enforce: 'pre'
+            },
+            // {
+            //     test: /\.(png|jpg|webp|gif|svg)$/i,
+            //     use: [
+            //         {
+            //             loader: 'img-optimize-loader',
+            //             options: {
+            //                 compress: {
+            //                     mode: 'high',
+            //                 }
+            //             }
+            //         },
+            //     ],
+            // },
+            // {
+            //     test: /\.(png|jpg|webp|gif|svg)$/i,
+            //     use: [
+            //         {
+            //             loader: 'url-loader',
+            //             options: {
+            //                 limit:18192
+            //             }
+            //         }
+            //     ]
+            // },
+            {
+                test: /\.(png|jpg|webp|gif|svg|mp3|mp4)$/i,
                 loader: 'file-loader',
                 options: {
                     name: '[path][name].[ext]'
@@ -34,14 +63,13 @@ exports.default = {
             //     test: /\.css$/,
             //     use: [MiniCssExtractPlugin.loader, 'css-loader']
             // },
-
-        ]
+           ]
     },
     plugins: [
         new HtmlWebPackPlugin({template: resolve(__dirname, 'index.html')}),
         new MiniCssExtractPlugin({
-            filename:'[name].[contenthash].css'
-        }),
+            filename: '[name].[contenthash].css'
+        })
 
     ]
 }
